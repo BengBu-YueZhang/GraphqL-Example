@@ -1,11 +1,13 @@
 const makeExecutableSchema = require('graphql-tools')
+const AuthSchema = require('./auth.schema')
+const AuthType = AuthSchema.AuthType
 
-const AuthType = `
+const RoleType = `
   type Auth {
     id: ID!
     code: String
     name: String
-    group: String
+    auths: [${AuthType}]
   }
 `
 
@@ -20,5 +22,5 @@ const MutationSchema = `
 `
 
 module.exports = {
-  AuthType
+  RoleType
 }
