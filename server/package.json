@@ -3,11 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "test": ""
   },
   "dependencies": {
+    "@koa/cors": "^2.2.3",
+    "acl": "^0.4.11",
     "apollo-server-koa": "^2.3.1",
+    "chai": "^4.2.0",
     "debug": "~2.6.8",
+    "jsonwebtoken": "^8.4.0",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-convert": "^1.2.0",
@@ -17,7 +22,11 @@
     "koa-router": "^7.2.1",
     "koa-static": "^3.0.0",
     "koa-views": "^6.0.2",
-    "nunjucks": "~3.0.0"
+    "mocha": "^5.2.0",
+    "moment": "^2.23.0",
+    "mongoose": "^5.4.1",
+    "nunjucks": "~3.0.0",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "babel-eslint": "7.1.1",

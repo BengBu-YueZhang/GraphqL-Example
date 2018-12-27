@@ -7,17 +7,16 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-const path = require('path')
 
 const config = require('./config')
 const routes = require('./routes')
 
-const port = process.env.PORT || config.port
+const mongo = require('./config/mongo')
 
-// error handler
+mongo.connect()
+
 onerror(app)
 
-// middlewares
 app.use(bodyparser())
   .use(json())
   .use(logger())
@@ -25,12 +24,12 @@ app.use(bodyparser())
   .use(router.routes())
   .use(router.allowedMethods())
 
-// logger
+
 app.use(async (ctx, next) => {
   const start = new Date()
   await next()
   const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - $ms`)
+  console.log(`${ctx.method} ${ctx.url} - ${ms}`)
 })
 
 routes(router)
