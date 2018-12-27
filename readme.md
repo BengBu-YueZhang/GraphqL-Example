@@ -1,6 +1,6 @@
 ## 文档
 
-> 文档并没有着重实现上的细节，而是更多专注与概念，更多实现的细节看apllo的client和server
+> **文档并没有着重实现上的细节，而是更多专注与概念，更多实现的细节看apllo的client和server**, 里面的有些概念，我理解的也不是非常明白。还需要更多的实践
 
 http://graphql.cn/learn/
 
@@ -483,6 +483,7 @@ type Mutation {
 
 ```js
 
+// 定义枚举值
 enum Episode {
   NEWHOPE
   EMPIRE
@@ -490,4 +491,482 @@ enum Episode {
 }
 ```
 
+### 列表和非空
 
+
+#### 修饰符
+
+!, 将字段标记为非空，！也可以用于定义字段的参数，表示一个非空的参数。
+
+
+#### 列表
+
+```js
+
+// 表示一个内容不能非空的字符串数组
+myField: [String!]
+myField: null // 有效
+myField: [] // 有效
+myField: ['a', 'b'] // 有效
+myField: ['a', null, 'b'] // 错误
+
+
+// 表示一个不可为空的字符串数组
+myField: [String]!
+myField: null // 错误
+myField: [] // 有效
+myField: ['a', 'b'] // 有效
+myField: ['a', null, 'b'] // 有效
+```
+
+
+### Interfaces接口
+
+跟许多类型系统一样，GraphQL 支持接口。一个接口是一个抽象类型，它包含某些字段，而对象类型必须包含这些字段，才能算实现了这个接口。（与TS中的interface类似）
+
+```js
+
+// 定义一个英雄接口
+interface Hero {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+}
+```
+
+```js
+
+// 类型实现了接口
+// 但是不像ts一样，类型里可以实现接口没有定义的字段
+type Human implements Hero {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+  starships: [Starship]
+  totalCredits: Int
+}
+
+type Droid implements Hero {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+  primaryFunction: String
+}
+```
+
+但是需要 ⚠️ 注意一点， 查询hero返回的是Hero类型，但是Human，Droid实现了Hero的接口，并定义Hero接口中没有的字段。如果返回了Human，Droid类型的数据，查询会产生错误。因为hero只实现了Hero接口。遇到这种情况可以使用内联片段
+
+```js
+
+query HeroForEpisode($ep: Episode!) {
+  hero(episode: $ep) {
+    name
+    // 当hero为Droid类型
+    ... on Droid {
+      primaryFunction
+    }
+  }
+}
+```
+
+### 联合类型
+
+> 联合类型的成员需要是具体对象类型；**你不能使用接口或者其他联合类型来创造一个联合类型**
+
+```js
+
+// 定义SearchResult联合类型
+union SearchResult = Human | Droid | Starship
+```
+
+如果你需要查询一个返回 SearchResult 联合类型的字段，那么你得使用条件片段才能查询任意字段。因为有的类型包含一些特殊字段。是其他类型所不包含的。
+
+```js
+
+{
+  search(text: "an") {
+    ... on Human {
+      name
+      height
+    }
+    ... on Droid {
+      name
+      primaryFunction
+    }
+    ... on Starship {
+      name
+      length
+    }
+  }
+}
+```
+
+### 输入类型 
+
+常用于mutation中，因为对于更改的操作。使用input作为声明的关键词，用来创建修改对象。
+
+**schema 混淆输入和输出类型。输入对象类型的字段当然也不能拥有参数**
+
+```js
+
+// 创建一条评论的类型
+input ReviewInput {
+  stars: Int!
+  commentary: String
+}
+```
+
+```js
+
+// 使用输入类型
+mutation CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) {
+  createReview(episode: $ep, review: $review) {
+    stars
+    commentary
+  }
+}
+```
+
+### 验证
+
+1. 片段不能引用其自身或者创造回环（形成递归），无效的查询
+2. 只能查询给定类型上的字段（如果该类型没有此字段，查询是无效的）
+3. 当我们查询一个字段时，如果其返回值不是标量或者枚举型，那我们就需要指明想要从这个字段中获取的数据（需要指明次级字段）
+4. 如果是标量类型，指明次级字段同样是无效的
+5. 🌟如果对象是联合类型，比如是Character类型，根据不同的参数，Character可能是Droid|Human类型。如果查询的字段不在Character类型中，那么查询也是无效的。如何解决呢？**使用内联片段, 获取具名片段。例子如下**
+
+```js
+
+// 错误，Character字段中是不包含primaryFunction字段的
+{
+  hero {
+    name
+    primaryFunction
+  }
+}
+
+// 使用具名片段
+{
+  hero {
+    name
+    ...DroidFields
+  }
+}
+
+fragment DroidFields on Droid {
+  primaryFunction
+}
+
+// 使用内联片段
+{
+  hero {
+    name
+    ... on Droid {
+      primaryFunction
+    }
+  }
+}
+```
+
+### 执行
+
+如果字段产生标量值，例如字符串或数字，则执行完成。如果一个字段产生一个对象，则该查询将继续执行该对象对应字段的解析器，直到生成标量值。GraphQL 查询始终以标量值结束。
+
+```js
+
+type Query {
+  human(id: ID!): Human
+}
+
+type Human {
+  name: String
+  appearsIn: [Episode]
+  starships: [Starship]
+}
+
+enum Episode {
+  NEWHOPE
+  EMPIRE
+  JEDI
+}
+
+type Starship {
+  name: String
+}
+```
+
+```js
+
+// 发起查询
+// 每个类型的每个字段都由一个 resolver 函数支持，该函数由 GraphQL 服务器开发人员提供（每一个字段有一个函数返回数据）
+{
+  human(id: 1002) {
+    name
+    appearsIn
+    starships {
+      name
+    }
+  }
+}
+```
+
+### 根字段 & 解析器
+
+> 所有查询的入口点
+
+每一个 GraphQL 服务端应用的顶层，必有一个类型代表着所有进入 GraphQL API 可能的入口点，我们将它称之为 Root 类型或 Query 类型。
+
+在这个例子中查询类型提供了一个字段 human，并且接受一个参数 id。这个字段的解析器可能请求了数据库之后通过构造函数返回一个 Human 对象。
+
+```js
+
+Query: {
+  human(obj, args, context, info) {
+    // 从数据库中获取内容
+    return context.db.loadHumanByID(args.id).then(
+      userData => new Human(userData)
+    )
+  }
+}
+```
+
+### 内省
+
+> 我们有时候会需要去问 GraphQL Schema 它支持哪些查询。GraphQL 通过内省系统让我们可以做到这点！
+
+> 通过__schema, 向GraphQL获取所有可用的字段
+
+```js
+
+{
+  __schema {
+    types {
+      name
+    }
+  }
+}
+```
+
+```js
+
+// 结果
+// Query, Character, Human, Episode, Droid 都是我们自定义的字段
+// String, Boolean 是内建的标量
+// __Schema, __Type, __TypeKind, __Field, __InputValue, __EnumValue, __Directive 这些有着两个下划线的类型是内省系统的一部分。
+{
+  "data": {
+    "__schema": {
+      "types": [
+        {
+          "name": "Query"
+        },
+        {
+          "name": "Episode"
+        },
+        {
+          "name": "Character"
+        },
+        {
+          "name": "ID"
+        },
+        {
+          "name": "String"
+        },
+        {
+          "name": "Int"
+        },
+        {
+          "name": "FriendsConnection"
+        },
+        {
+          "name": "FriendsEdge"
+        },
+        {
+          "name": "PageInfo"
+        },
+        {
+          "name": "Boolean"
+        },
+        {
+          "name": "Review"
+        },
+        {
+          "name": "SearchResult"
+        },
+        {
+          "name": "Human"
+        },
+        {
+          "name": "LengthUnit"
+        },
+        {
+          "name": "Float"
+        },
+        {
+          "name": "Starship"
+        },
+        {
+          "name": "Droid"
+        },
+        {
+          "name": "Mutation"
+        },
+        {
+          "name": "ReviewInput"
+        },
+        {
+          "name": "__Schema"
+        },
+        {
+          "name": "__Type"
+        },
+        {
+          "name": "__TypeKind"
+        },
+        {
+          "name": "__Field"
+        },
+        {
+          "name": "__InputValue"
+        },
+        {
+          "name": "__EnumValue"
+        },
+        {
+          "name": "__Directive"
+        },
+        {
+          "name": "__DirectiveLocation"
+        }
+      ]
+    }
+  }
+}
+```
+
+### 如何检验一个特定的类型？
+
+```js
+
+// 查询Droid字段的类型，kind会返回__TypeKind
+// __TypeKind是枚举类型，可以是INTERFACE获取Object
+// 对于List的包装类型，使用ofType可以查看List中的内容
+{
+  __type(name: "Droid") {
+    name
+    fields {
+      name
+      type {
+        name
+        kind
+        ofType {
+          name
+          kind
+        }
+      }
+    }
+  }
+}
+
+// 返回Droid所有可用的字段
+{
+  "data": {
+    "__type": {
+      "name": "Droid",
+      "fields": [
+        {
+          "name": "id",
+          "type": {
+            "name": null,
+            "kind": "NON_NULL",
+            "ofType": {
+              "name": "ID",
+              "kind": "SCALAR"
+            }
+          }
+        },
+        {
+          "name": "name",
+          "type": {
+            "name": null,
+            "kind": "NON_NULL",
+            "ofType": {
+              "name": "String",
+              "kind": "SCALAR"
+            }
+          }
+        },
+        {
+          "name": "friends",
+          "type": {
+            "name": null,
+            "kind": "LIST",
+            "ofType": {
+              "name": "Character",
+              "kind": "INTERFACE"
+            }
+          }
+        },
+        {
+          "name": "friendsConnection",
+          "type": {
+            "name": null,
+            "kind": "NON_NULL",
+            "ofType": {
+              "name": "FriendsConnection",
+              "kind": "OBJECT"
+            }
+          }
+        },
+        {
+          "name": "appearsIn",
+          "type": {
+            "name": null,
+            "kind": "NON_NULL",
+            "ofType": {
+              "name": null,
+              "kind": "LIST"
+            }
+          }
+        },
+        {
+          "name": "primaryFunction",
+          "type": {
+            "name": "String",
+            "kind": "SCALAR",
+            "ofType": null
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+### 缓存
+
+在基于入口端点的 API 中，客户端可以使用 HTTP 缓存来确定两个资源是否相同，从而轻松避免重新获取资源。这些 API 中的 URL 是全局唯一标识符，客户端可以利用它来构建缓存。然而，在 GraphQL 中，没有类似 URL 的基元能够为给定对象提供全局唯一标识符。这里提供为 API 暴露这种标识符以供客户端使用的最佳实践。
+
+这是向客户端开发人员提供的强大工具。与基于资源的 API 使用 URL 作为全局唯一主键的方式相同，该系统中提供 id 字段作为全局唯一主键。
+(**使用全局id作为缓存？？？**)
+
+```js
+
+{
+  starship(id:"3003") {
+    id
+    name
+  }
+  droid(id:"2001") {
+    id
+    name
+    friends {
+      id
+      name
+    }
+  }
+}
+```
