@@ -6,6 +6,7 @@
     "start": "nodemon app.js"
   },
   "dependencies": {
+    "apollo-server-koa": "^2.3.1",
     "debug": "~2.6.8",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
