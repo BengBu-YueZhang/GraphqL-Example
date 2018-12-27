@@ -1,5 +1,17 @@
 ## apollo-server
 
+### 安装
+
+> 我使用的是koa的nodejs框架
+
+```js
+
+// 安装
+yarn add apollo-server-koa@rc graphql
+```
+
+### REST API
+
 ## apollo-client
 
 ## 官方文档

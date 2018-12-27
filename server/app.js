@@ -9,7 +9,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
 const config = require('./config')
-const routes = require('./routes')
+const GraphQLRouter = require('./graphql')
 
 const mongo = require('./config/mongo')
 
@@ -18,12 +18,10 @@ mongo.connect()
 onerror(app)
 
 app.use(bodyparser())
-  .use(json())
-  .use(logger())
-  .use(require('koa-static')(__dirname + '/public'))
-  .use(router.routes())
-  .use(router.allowedMethods())
+app.use(json())
+app.use(logger())
 
+app.use(GraphQLRouter.routes(), GraphQLRouter.allowedMethods())
 
 app.use(async (ctx, next) => {
   const start = new Date()
@@ -31,8 +29,6 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}`)
 })
-
-routes(router)
 
 app.on('error', function(err, ctx) {
   console.log(err)
