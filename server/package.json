@@ -9,9 +9,11 @@
   "dependencies": {
     "@koa/cors": "^3.0.0",
     "acl": "^0.4.11",
+    "apollo-server": "^2.4.8",
     "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "debug": "~2.6.8",
+    "graphql": "^14.2.1",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.1",
