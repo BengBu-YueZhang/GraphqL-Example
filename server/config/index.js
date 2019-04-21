@@ -1,3 +1,5 @@
+const URL = require('./URL')
+
 module.exports = {
-  port: 3000
+  URL
 }
