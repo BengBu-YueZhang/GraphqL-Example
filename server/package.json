@@ -9,7 +9,7 @@
   "dependencies": {
     "@koa/cors": "^3.0.0",
     "acl": "^0.4.11",
-    "apollo-server": "^2.4.8",
+    "apollo-server-koa": "^2.4.8",
     "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "debug": "~2.6.8",
