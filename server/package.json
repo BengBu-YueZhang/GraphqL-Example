@@ -6,17 +6,27 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "@koa/cors": "^3.0.0",
+    "acl": "^0.4.11",
+    "chai": "^4.2.0",
     "debug": "~2.6.8",
+    "jsonwebtoken": "^8.5.1",
     "koa": "^2.3.0",
-    "koa-bodyparser": "^4.2.0",
+    "koa-bodyparser": "^4.2.1",
     "koa-convert": "^1.2.0",
     "koa-json": "^2.0.2",
+    "koa-jwt": "^3.5.1",
     "koa-logger": "^3.0.0",
     "koa-onerror": "^3.1.0",
-    "koa-router": "^7.2.1",
+    "koa-router": "^7.4.0",
     "koa-static": "^3.0.0",
     "koa-views": "^6.0.2",
-    "nunjucks": "~3.0.0"
+    "mocha": "^6.1.4",
+    "moment": "^2.24.0",
+    "mongoose": "^5.5.2",
+    "nodemon": "^1.18.11",
+    "nunjucks": "~3.0.0",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "babel-eslint": "7.1.1",
