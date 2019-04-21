@@ -10,6 +10,8 @@ const config = require('./config')
 const routes = require('./routes')
 const port = config.URL.port
 
+config.mongo.mongoConnect()
+
 onerror(app)
 
 app.use(bodyparser())
