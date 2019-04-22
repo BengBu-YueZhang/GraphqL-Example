@@ -1,5 +1,6 @@
 const Koa = require('koa')
-const bodyparser = require('koa-bodyparser')
+// const bodyparser = require('koa-bodyparser')
+const bodyparser = require('koa-bodyparser-graphql')
 const config = require('./config')
 const port = config.URL.port
 const cors = require('@koa/cors')
@@ -24,7 +25,7 @@ const resolvers = {
 }
 
 app.use(cors({
-  origin: '*',
+  origin: '127.0.0.1:5000',
   credentials: true,
   methods: ['PUT', 'POST', 'GET', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Content-Length', 'Authorization', 'Accept', 'X-Requested-With', 'x-access-token']
@@ -32,7 +33,12 @@ app.use(cors({
 app.use(UserRoute.routes(), UserRoute.allowedMethods())
 app.use(bodyparser())
 
-const server = new ApolloServer({ typeDefs, resolvers })
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  introspection: true,
+  playground: true
+})
 
 server.applyMiddleware({
   app,
