@@ -4,9 +4,13 @@ const config = require('./config')
 const port = config.URL.port
 const cors = require('@koa/cors')
 const UserRoute = require('./routes/user.router')
-const { ApolloServer, gql } = require('apollo-server-koa')
+const { ApolloServer } = require('apollo-server-koa')
 const response = require('./middleware/response')
 const app = new Koa()
+
+const typeDefs = require('./schemas/user.schema')
+const UserDatasource = require('./datasources/user.datasource')
+const resolvers = require('./resolvers/user. resolvers')
 
 app.use(cors({
   origin: '127.0.0.1:5000',
@@ -20,7 +24,10 @@ app.use(response())
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  dataSources: () => ({
+    UserDatasource: new UserDatasource()
+  })
 })
 
 server.applyMiddleware({
