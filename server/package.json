@@ -27,6 +27,7 @@
     "koa-router": "^7.4.0",
     "koa-static": "^3.0.0",
     "koa-views": "^6.0.2",
+    "merge-graphql-schemas": "^1.5.8",
     "mocha": "^6.1.4",
     "moment": "^2.24.0",
     "mongoose": "^5.5.2",

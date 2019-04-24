@@ -16,7 +16,7 @@ const initRouters = () => {
   })
 }
 
-// const typeDefs = require('./schemas/user.schema')
+const typeDefs = require('./schemas')
 // const UserDatasource = require('./datasources/user.datasource')
 // const resolvers = require('./resolvers/user. resolvers')
 

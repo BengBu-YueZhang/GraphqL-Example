@@ -12,5 +12,11 @@ module.exports = {
   },
 
   async getCurrentUser (ctx, next) {
+  },
+
+  async addUser () {
+  },
+
+  async updateUser () {
   }
 }
