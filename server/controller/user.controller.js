@@ -1,4 +1,5 @@
 module.exports = {
+
   async login (ctx, next) {
     console.log('login')
   },
@@ -19,6 +20,24 @@ module.exports = {
           id: '1',
           gender: 1,
           name: 'jack',
+          role: {
+            id: 1,
+            name: 'admin'
+          } 
+        }
+      ]
+    }
+    await next()
+  },
+
+  async getUser (ctx, next) {
+    let { id } = ctx.request.query
+    ctx.result = {
+      data: [
+        {
+          id: id,
+          gender: 0,
+          name: 'tom',
           role: {
             id: 1,
             name: 'admin'

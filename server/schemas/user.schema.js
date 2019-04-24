@@ -1,17 +1,15 @@
-const { gql } = require('apollo-server')
+const { gql } = require('apollo-server-koa')
 
+// type Mutation {
+//   addUser(user: User!): Response!
+//   deleteUser(id: ID!): Response!
+// }
 
 const typeDefs = gql`
 
   type Query {
     list: [User]!
     me(id: ID!): User
-  }
-
-  type Mutation {
-    addUser(user: User!): !Response
-
-    deleteUser(id: ID!): !Response
   }
 
   type User {
