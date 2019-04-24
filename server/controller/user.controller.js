@@ -9,7 +9,7 @@ module.exports = {
       data: [
         {
           id: '1',
-          gender: 0,
+          gender: 'MAN',
           name: 'tom',
           role: {
             id: 1,
@@ -18,7 +18,7 @@ module.exports = {
         },
         {
           id: '1',
-          gender: 1,
+          gender: 'MAN',
           name: 'jack',
           role: {
             id: 1,
@@ -36,7 +36,7 @@ module.exports = {
       data: [
         {
           id: id,
-          gender: 0,
+          gender: 'WOMAN',
           name: 'tom',
           role: {
             id: 1,
