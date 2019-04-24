@@ -34,4 +34,4 @@ const server = new ApolloServer({
 })
 server.applyMiddleware({ app, path: config.URL.graphql })
 
-module.exports = app.listen(config.port)
+module.exports = app.listen(config.URL.port)
