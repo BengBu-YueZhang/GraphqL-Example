@@ -6,6 +6,8 @@ const path = require('path')
 const { ApolloServer } = require('apollo-server-koa')
 const response = require('./middleware/response')
 const config = require('./config')
+const typeDefs = require('./schemas')
+const resolvers = require('./resolvers')
 const app = new Koa()
 
 const initRouters = () => {
@@ -15,10 +17,6 @@ const initRouters = () => {
     app.use(route.routes(), route.allowedMethods())
   })
 }
-
-const typeDefs = require('./schemas')
-// const UserDatasource = require('./datasources/user.datasource')
-// const resolvers = require('./resolvers/user. resolvers')
 
 app.use(cors({
   origin: '127.0.0.1:5000',
@@ -30,8 +28,10 @@ app.use(bodyparser())
 app.use(response())
 initRouters()
 
-// const server = new ApolloServer({
-// })
-// server.applyMiddleware({ app, path: config.URL.graphql })
+const server = new ApolloServer({
+  typeDefs,
+  resolvers
+})
+server.applyMiddleware({ app, path: config.URL.graphql })
 
 module.exports = app.listen(config.port)
