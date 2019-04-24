@@ -7,6 +7,7 @@ const config = {
     graphql: '/graphql'
   },
   production: {
+    port: 10010
   }
 }
 
