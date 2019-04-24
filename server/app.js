@@ -8,6 +8,7 @@ const response = require('./middleware/response')
 const config = require('./config')
 const typeDefs = require('./schemas')
 const resolvers = require('./resolvers')
+const UserDatasource = require('./datasources/user.datasource')
 const app = new Koa()
 
 const initRouters = () => {
@@ -30,7 +31,10 @@ initRouters()
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  dataSources: () => ({
+    UserDatasource: new UserDatasource()
+  })
 })
 server.applyMiddleware({ app, path: config.URL.graphql })
 
