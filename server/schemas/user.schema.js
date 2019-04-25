@@ -2,8 +2,8 @@ const { gql } = require('apollo-server-koa')
 
 const typeDefs = gql`
   type Query {
-    users: [User]!
-    user(id: ID!, start: String, pageSize: Int): User!
+    users(pagestart: Int = 1, pagesize: Int = 10): [User]!
+    user(id: ID!): User!
     me: User
   }
 

@@ -6,9 +6,9 @@ class UserAPI extends RESTDataSource {
     this.baseURL = 'http://127.0.0.1:5000/user/'
   }
 
-  async getUsers () {
-    const result = await this.get('users')
-    console.log('result>>>>>', result)
+  async getUsers (params) {
+    const result = await this.get('users', params)
+    console.log(result)
   }
 }
 

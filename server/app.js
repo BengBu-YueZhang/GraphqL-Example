@@ -34,7 +34,13 @@ const server = new ApolloServer({
   resolvers,
   dataSources: () => ({
     UserDatasource: new UserDatasource()
-  })
+  }),
+  formatError: (err) => {
+    // 对错误信息的处理, 我在学习GraphQL过程中发现，GraphQLAPI不能自定义HTTP的状态码
+    // 比如你鉴权错误，GraphQL以后会返回200的状态
+    // https://github.com/apollographql/apollo-server/issues/549
+    return err
+  }
 })
 server.applyMiddleware({ app, path: config.URL.graphql })
 

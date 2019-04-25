@@ -33,6 +33,7 @@
     "mongoose": "^5.5.2",
     "nodemon": "^1.18.11",
     "nunjucks": "~3.0.0",
+    "ramda": "^0.26.1",
     "redis": "^2.8.0"
   },
   "devDependencies": {

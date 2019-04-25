@@ -1,7 +1,10 @@
 module.exports = {
   Query: {
-    users (_, __, { dataSources }) {
-      return dataSources.UserDatasource.getUsers()
+    users (_, { pagestart, pagesize }, { dataSources }) {
+      return dataSources.UserDatasource.getUsers({
+        pagestart,
+        pagesize
+      })
     }
   }
 }
