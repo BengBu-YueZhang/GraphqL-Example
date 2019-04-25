@@ -1,14 +1,50 @@
 const { RESTDataSource } = require('apollo-datasource-rest')
-
+const config = require('../config')
+const moment = require('moment')
 class UserAPI extends RESTDataSource {
   constructor() {
     super()
-    this.baseURL = 'http://127.0.0.1:5000/user/'
+    this.baseURL = `http://127.0.0.1:${config.URL.port}/user/`
   }
 
   async getUsers (params) {
-    const result = await this.get('users', params)
-    console.log(result)
+    let { data, msg, code } = await this.get('users', params)
+    data = Array.isArray(data) ? data.map(user => this.launchReducer(user)) : []
+    return {
+      data,
+      code,
+      msg
+    }
+  }
+
+  async getUserById () {
+  }
+
+  async getCurrentUser () {
+  }
+
+  async addUser (params) {
+    let data = await this.post('/', params)
+  }
+
+  async updateUser (params) {
+    let data = await this.put('/', params)
+  }
+
+  async login () {
+  }
+
+  async logout () {
+  }
+
+  userReducer (user) {
+    const { id, name, password, createDate } = user
+    return {
+      id,
+      name,
+      password,
+      createDate: moment(createDate).format('MM-DD-YYYY')
+    }
   }
 }
 

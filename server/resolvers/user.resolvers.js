@@ -5,6 +5,20 @@ module.exports = {
         pagestart,
         pagesize
       })
+    },
+    user (_, { id }, { dataSources }) {
+      return dataSources.UserDatasource.getUserById(id)
+    },
+    me () {
+      return dataSources.UserDatasource.getCurrentUser()
+    }
+  },
+  Mutation: {
+    addUser (_, { user }, { dataSources }) {
+      return dataSources.UserDatasource.addUser(user)
+    },
+    updateUser (_, { user }, { dataSources }) {
+      return dataSources.UserDatasource.updateUser(user)
     }
   }
 }
