@@ -10,6 +10,8 @@ const typeDefs = gql`
   type Mutation {
     addUser(user: UserRequest): UserResponse
     updateUser(user: UserRequest): UserResponse
+    login(user: UserRequest): UserResponse
+    logout: UserResponse
   }
 
   type User {
@@ -28,7 +30,8 @@ const typeDefs = gql`
   type UserResponse implements Response {
     code: Int
     msg: String
-    data: User!
+    token: String
+    data: User
   }
 
   input UserRequest {

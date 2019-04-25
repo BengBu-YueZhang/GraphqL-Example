@@ -19,6 +19,12 @@ module.exports = {
     },
     updateUser (_, { user }, { dataSources }) {
       return dataSources.UserDatasource.updateUser(user)
+    },
+    login (_, { user }, { dataSources }) {
+      return dataSources.UserDatasource.login(user)
+    },
+    logout () {
+      return dataSources.UserDatasource.logout()
     }
   }
 }

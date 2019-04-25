@@ -31,10 +31,12 @@ class UserAPI extends RESTDataSource {
     let data = await this.put('/', params)
   }
 
-  async login () {
+  async login (params) {
+    let data = await this.post('/login', params)
   }
 
-  async logout () {
+  async logout (params) {
+    let data = await this.post('/logout', params)
   }
 
   userReducer (user) {
