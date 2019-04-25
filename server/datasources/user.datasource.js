@@ -23,6 +23,16 @@ class UserAPI extends RESTDataSource {
   async getCurrentUser () {
   }
 
+  /**
+    * mutation addUser {
+        addUser(user: {
+          name: "123",
+          password: "123"
+        }) {
+          code
+        }
+      }
+    */
   async addUser (params) {
     let data = await this.post('/', params)
   }
