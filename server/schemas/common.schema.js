@@ -8,6 +8,10 @@ const typeDefs = gql`
     msg: String
   }
 
+  type CommonResponse {
+    code: Int
+    msg: String
+  }
 `
 
 module.exports = typeDefs

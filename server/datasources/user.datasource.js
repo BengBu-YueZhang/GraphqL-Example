@@ -34,7 +34,11 @@ class UserAPI extends RESTDataSource {
       }
     */
   async addUser (params) {
-    let data = await this.post('/', params)
+    let { code, msg } = await this.post('/', { ...params })
+    return {
+      code,
+      msg
+    }
   }
 
   async updateUser (params) {

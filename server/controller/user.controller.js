@@ -82,7 +82,7 @@ module.exports = {
 
   async addUser (ctx, next) {
     try {
-      const { name, password } = ctx.request.body
+      let { name, password } = ctx.request.body
       if (isEmpty(name)) {
         ctx.throw(400, `name不能为空`)
       }
@@ -95,7 +95,7 @@ module.exports = {
       if (!is(String, password)) {
         ctx.throw(400, `password必须是字符串`)
       }
-      let user = await UserModel.find({ name })
+      let user = await UserModel.findOne({ name })
       if (user) {
         ctx.throw(400, `用户名重复`)
       }
