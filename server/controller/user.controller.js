@@ -4,6 +4,10 @@ const { is, isEmpty } = require('ramda')
 const bcrypt = require('../config/bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
+const { promisify } = require('util')
+const redisClient = require('../config/redis')
+const setAsync = promisify(redisClient.set).bind(redisClient)
+const delAsync = promisify(redisClient.del).bind(redisClient)
 
 module.exports = {
   async login (ctx, next) {
@@ -15,7 +19,7 @@ module.exports = {
       if (isEmpty(password)) {
         ctx.throw(400, `password不能为空`)
       }
-      const user = await UserModel.find({ name })
+      const user = await UserModel.findOne({ name })
       if (!user) {
         ctx.throw(400, `用户不存在`)
       }
@@ -23,6 +27,7 @@ module.exports = {
       if (!equal) {
         ctx.throw(400, `密码错误`)
       }
+      // 生成token
       const token = jwt.sign(
         {
           id: user._id
@@ -33,6 +38,7 @@ module.exports = {
         }
       )
       const redisKey = user._id.toString()
+      await setAsync(redisKey, token, 'EX', config.jwt.timeout)
       ctx.result = {
         code: 200,
         msg: 'success',

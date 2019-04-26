@@ -8,6 +8,7 @@ const typeDefs = gql`
     msg: String
   }
 
+  # 公共的返回数据的Type
   type CommonResponse {
     code: Int
     msg: String

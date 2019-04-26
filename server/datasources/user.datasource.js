@@ -9,7 +9,7 @@ class UserAPI extends RESTDataSource {
 
   async getUsers (params) {
     let { data, msg, code } = await this.get('users', params)
-    data = Array.isArray(data) ? data.map(user => this.launchReducer(user)) : []
+    data = Array.isArray(data) ? data.map(user => this.userReducer(user)) : []
     return {
       data,
       code,
@@ -46,7 +46,12 @@ class UserAPI extends RESTDataSource {
   }
 
   async login (params) {
-    let data = await this.post('/login', params)
+    let { token, code, msg } = await this.post('/login', { ...params })
+    return {
+      token,
+      code,
+      msg
+    }
   }
 
   async logout (params) {
