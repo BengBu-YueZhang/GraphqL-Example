@@ -10,6 +10,7 @@ const typeDefs = require('./schemas')
 const resolvers = require('./resolvers')
 const UserDatasource = require('./datasources/user.datasource')
 const app = new Koa()
+const mode = process.env.mode
 
 const initRouters = () => {
   const paths = glob.sync(path.resolve('./routes/*.router.js'))
@@ -35,6 +36,8 @@ const server = new ApolloServer({
   dataSources: () => ({
     UserDatasource: new UserDatasource()
   }),
+  // 内省
+  introspection: mode === 'develop' ? true : false,
   formatError: (err) => {
     // 对错误信息的处理, 我在学习GraphQL过程中发现，GraphQLAPI不能自定义HTTP的状态码
     // 比如你鉴权错误，GraphQL以后会返回200的状态
