@@ -157,6 +157,9 @@ module.exports = {
       if (isEmpty(id)) {
         ctx.throw(400, `id不能为空`)
       }
+      if (!is(String, id)) {
+        ctx.throw(400, `id必须是字符串`)
+      }
       if (isEmpty(name)) {
         ctx.throw(400, `name不能为空`)
       }
