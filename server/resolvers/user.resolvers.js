@@ -7,7 +7,9 @@ module.exports = {
       })
     },
     user (_, { id }, { dataSources }) {
-      return dataSources.UserDatasource.getUserById(id)
+      return dataSources.UserDatasource.getUserById({
+        id
+      })
     },
     me () {
       return dataSources.UserDatasource.getCurrentUser()

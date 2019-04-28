@@ -8,7 +8,6 @@ class UserAPI extends RESTDataSource {
 
   async getUsers (params) {
     let { data, msg, code } = await this.get('users', params)
-    console.log(data)
     data = Array.isArray(data) ? data.map(user => this.userReducer(user)) : []
     return {
       data,
@@ -17,10 +16,24 @@ class UserAPI extends RESTDataSource {
     }
   }
 
-  async getUserById () {
+  async getUserById (params) {
+    let { data, msg, code } = await this.get('/', params)
+    data = this.userReducer(data)
+    return {
+      data,
+      code,
+      msg
+    }
   }
 
   async getCurrentUser () {
+    let { data, msg, code } = await this.get('/current')
+    data = this.userReducer(data)
+    return {
+      data,
+      code,
+      msg
+    }
   }
 
   /**
