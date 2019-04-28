@@ -19,13 +19,13 @@ const UserSchema = new Schema({
   }
 })
 
-UserSchema.options.toObject = {
-  transform (doc, ret) {
-    ret.id = doc._id
+UserSchema.set('toJSON', {
+  transform: function (doc, ret, options) {
+    ret.id = ret._id
     delete ret._id
-    return ret
+    delete ret.__v
   }
-}
+})
 
 const User = mongoose.model('User', UserSchema)
 
