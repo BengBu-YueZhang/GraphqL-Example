@@ -10,7 +10,7 @@ const typeDefs = gql`
     id: ID!
     title: String!
     detail: String!
-    createdDate: String!
+    createDate: String!
     uId: ID!
   }
 `

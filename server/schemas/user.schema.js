@@ -18,7 +18,7 @@ const typeDefs = gql`
     id: ID!
     name: String
     password: String
-    createdDate: String
+    createDate: String
   }
 
   type UsersResponse implements Response {
