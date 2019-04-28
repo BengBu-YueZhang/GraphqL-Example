@@ -52,7 +52,10 @@ module.exports = {
 
   async logout (ctx, next) {
     try {
+      const { id } = ctx.decoded
+      await delAsync(id)
     } catch (error) {
+      throw error
     }
   },
 
