@@ -1,6 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest')
 const config = require('../config')
-const moment = require('moment')
 class UserAPI extends RESTDataSource {
   constructor() {
     super()
