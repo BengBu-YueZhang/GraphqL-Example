@@ -9,6 +9,7 @@ class UserAPI extends RESTDataSource {
 
   async getUsers (params) {
     let { data, msg, code } = await this.get('users', params)
+    console.log(data)
     data = Array.isArray(data) ? data.map(user => this.userReducer(user)) : []
     return {
       data,
@@ -64,7 +65,7 @@ class UserAPI extends RESTDataSource {
       id,
       name,
       password,
-      createDate: moment(createDate).format('MM-DD-YYYY')
+      createDate
     }
   }
 }

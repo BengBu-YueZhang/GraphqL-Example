@@ -2,13 +2,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const NoteSchema = new Schema({
-  name: {
+  title: {
     type: String,
-    unique: true,
-    min: 3,
     required: true
   },
-  password: {
+  detail: {
     type: String,
     required: true,
     min: 6

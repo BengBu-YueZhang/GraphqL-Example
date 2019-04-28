@@ -10,8 +10,8 @@ const typeDefs = gql`
     id: ID!
     title: String!
     detail: String!
-    createDate: String!
-    uId: ID!
+    createDate: Date
+    uId: User
   }
 `
 

@@ -86,6 +86,12 @@ module.exports = {
   async getUserById (ctx, next) {
     try {
       const { id } = ctx.request.query
+      if (isEmpty(id)) {
+        ctx.throw(400, `id不能为空`)
+      }
+      if (!is(String, id)) {
+        ctx.throw(400, `id必须是字符串`)
+      }
       const data = await UserModel.findById(id)
       ctx.result = {
         data,
