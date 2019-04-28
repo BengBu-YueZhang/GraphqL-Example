@@ -84,9 +84,33 @@ module.exports = {
   },
 
   async getUserById (ctx, next) {
+    try {
+      const { id } = ctx.request.query
+      const data = await UserModel.findById(id)
+      ctx.result = {
+        data,
+        msg: 'success',
+        code: 200
+      }
+      await next()
+    } catch (error) {
+      throw error
+    }
   },
 
   async getCurrentUser (ctx, next) {
+    try {
+      const { id } = ctx.decoded
+      const data = await UserModel.findById(id)
+      ctx.result = {
+        data,
+        msg: 'success',
+        code: 200
+      }
+      await next()
+    } catch (error) {
+      throw error
+    }
   },
 
   async addUser (ctx, next) {

@@ -14,10 +14,12 @@ module.exports = {
     ...UserResolversQuery,
     ...NoteResolversQuery
   },
+
   Mutation: {
     ...UserResolversMutation,
     ...NoteResolversMutation
   },
+  
   Date: new GraphQLScalarType({
     name: 'Date',
     description: '时间类型标量',
