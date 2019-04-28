@@ -4,7 +4,7 @@ module.exports = {
     },
     note () {
     },
-    me () {
+    meNote () {
     }
   },
   Mutation: {
