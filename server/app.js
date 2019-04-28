@@ -9,6 +9,7 @@ const config = require('./config')
 const typeDefs = require('./schemas')
 const resolvers = require('./resolvers')
 const UserDatasource = require('./datasources/user.datasource')
+const NoteDatasource = require('./datasources/note.datasource')
 const app = new Koa()
 const mode = process.env.mode
 
@@ -18,6 +19,22 @@ const initRouters = () => {
     const route = require(path)
     app.use(route.routes(), route.allowedMethods())
   })
+}
+
+const initDatasource = () => {
+  let datasourceMap = {}
+  const paths = glob.sync(path.resolve('./datasources/*.datasource.js'))
+  const names = paths.map(path => {
+    let name = path.split('/datasources/')[1]
+    name = name.match(/(.*)\.datasource\.js/)[1]
+    let first = name[0].toUpperCase()
+    return `${first}${name.slice(1)}Datasource`
+  })
+  paths.forEach((path, i) => {
+    const Datasource = require(path)
+    datasourceMap[names[i]] = new Datasource()
+  })
+  return datasourceMap
 }
 
 app.use(cors({
@@ -33,9 +50,7 @@ initRouters()
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  dataSources: () => ({
-    UserDatasource: new UserDatasource()
-  }),
+  dataSources: () => initDatasource(),
   // 内省
   introspection: mode === 'develop' ? true : false,
   formatError: (err) => {

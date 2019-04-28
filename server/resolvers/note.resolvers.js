@@ -1,18 +1,31 @@
 module.exports = {
   Query: {
-    notes () {
+    notes (_, { pagestart, pagesize }, { dataSources }) {
+      return dataSources.NoteDatasource.getNotes({
+        pagestart,
+        pagesize
+      })
     },
-    note () {
+    note (_, { id }, { dataSources }) {
+      return dataSources.NoteDatasource.getNoteById({
+        id
+      })
     },
     meNote () {
+      return dataSources.NoteDatasource.getCurrentUserNote()
     }
   },
   Mutation: {
-    addNote () {
+    addNote (_, { note }, { dataSources }) {
+      return dataSources.NoteDatasource.addNote(note)
     },
-    updateNote () {
+    updateNote (_, { note }, { dataSources }) {
+      return dataSources.NoteDatasource.updateNote(note)
     },
-    deleteNote () {
+    deleteNote (_, { id }, { dataSources }) {
+      return dataSources.NoteDatasource.deleteNote({
+        id
+      })
     }
   }
 }
