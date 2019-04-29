@@ -21,4 +21,11 @@ Axios.interceptors.request.use(
   },
 );
 
+Axios.interceptors.response.use(
+  (res: any) => {
+    const data: any = res.data;
+    return data;
+  },
+);
+
 export default Axios;

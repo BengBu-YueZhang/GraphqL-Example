@@ -18,7 +18,15 @@ module.exports = {
       unitPrecision: 3, // vw的小数位数
       viewportUnit: 'vw', // 指定需要转换成的视窗单位，建议使用vw
       // 不转换vw的类名(这个类名下的px不会转为px)
-      selectorBlackList: ['.ignore', '.hairlines'],
+      selectorBlackList: [
+        '.ignore',
+        '.hairlines',
+        '.mu-input',
+        '.mu-input-label',
+        '.mu-text-field',
+        '.mu-input-content',
+        '.mu-text-field-input'
+      ],
       // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值著作权归作者所有。
       minPixelValue: 1, 
       // 允许在媒体查询中转换`px`
