@@ -1,0 +1,53 @@
+import Axios from '../util/http';
+import { UserInfo } from '../interface/user.interface';
+
+/**
+ * 由于使用了GraphQL, 按照每一个页面，创建请求的的函数
+ */
+
+/**
+ * 获取首页的信息
+ */
+export async function getHomeInfo(pagestart: number = 1, pagesize: number = 10): Promise<[UserInfo]> {
+  try {
+    const { data } = await Axios.post('/graphql', {
+      query: `
+        query getHomeInfo {
+          users(pagestart: ${pagestart}, pagesize: ${pagesize}) {
+            data {
+              name
+              createDate
+            }
+          }
+        }
+      `,
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+/**
+ * 获取个人详情页的数据
+ */
+export async function getAboutInfo(): Promise<any> {
+  try {
+    const { data } = await Axios.post('/graphql', {
+      query: `
+        query getAboutInfo {
+          me: {
+            name
+            uId {
+              title
+              createDate
+            }
+          }
+        }
+      `,
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}

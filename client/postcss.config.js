@@ -30,7 +30,13 @@ module.exports = {
         '.mu-list',
         '.mu-item-wrapper',
         '.mu-item',
-        '.mu-item-title'
+        '.mu-item-title',
+        '.mu-card-header-title',
+        '.mu-card-title',
+        '.mu-card-sub-title',
+        '.mu-card-title',
+        '.mu-card-sub-title',
+        '.mu-card-text'
       ],
       // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值著作权归作者所有。
       minPixelValue: 1, 
