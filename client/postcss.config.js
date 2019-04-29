@@ -25,7 +25,12 @@ module.exports = {
         '.mu-input-label',
         '.mu-text-field',
         '.mu-input-content',
-        '.mu-text-field-input'
+        '.mu-text-field-input',
+        '.mu-appbar',
+        '.mu-list',
+        '.mu-item-wrapper',
+        '.mu-item',
+        '.mu-item-title'
       ],
       // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值著作权归作者所有。
       minPixelValue: 1, 

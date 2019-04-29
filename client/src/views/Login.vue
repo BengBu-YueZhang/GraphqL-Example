@@ -1,17 +1,16 @@
 <template>
   <div class="login">
+    <img src="../public/image/logo.png" />
     <mu-text-field
       v-model="userInfo.name"
       label="UserName"
       label-float
-      class="input"
     ></mu-text-field>
     <mu-text-field
       v-model="userInfo.password"
       label="Password"
       label-float
       type="password"
-      class="input"
     ></mu-text-field>
   </div>
 </template>
@@ -40,5 +39,10 @@ export default class Login extends Vue {
   height: 100%;
   overflow: hidden;
   flex-direction: column;
+  img {
+    width: 200px;
+    margin-top: -200px;
+    margin-bottom: 40px;
+  }
 }
 </style>
