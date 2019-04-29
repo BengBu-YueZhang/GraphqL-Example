@@ -12,21 +12,32 @@
       label-float
       type="password"
     ></mu-text-field>
+    <mu-button
+      @click="handleLogin"
+      color="primary"
+    >登录</mu-button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { UserInfo } from '../interface/user.interface';
+import { login } from '../http';
 
-@Component({
-})
+@Component
 export default class Login extends Vue {
   // 用户信息
   private userInfo: UserInfo = {
     name: '',
     password: '',
   };
+
+  private created(): void {
+  }
+
+  private async handleLogin(): Promise<any> {
+    await login(this.userInfo);
+  }
 }
 </script>
 

@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { NoteInfo } from '../interface/note.interface.ts';
+import { NoteInfo } from '../interface/note.interface';
 
 @Component
 export default class Edit extends Vue {

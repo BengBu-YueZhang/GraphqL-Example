@@ -1,8 +1,15 @@
 import axios from 'axios';
 import { isHaveStorage, getLocalStorage, removeLocalStorage } from '@/util/storage';
 
+
+const NODE_ENV: string = process.env.NODE_ENV;
+
+const baseURL = NODE_ENV === 'development' ? 'http://127.0.0.1:5000/' : '/';
+
+// const baseURL = process.env;
+
 const Axios = axios.create({
-  baseURL: 'http://127.0.0.1:3000',
+  baseURL,
   responseType: 'json',
   headers: {
     'Content-Type': 'application/json',

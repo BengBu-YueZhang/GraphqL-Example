@@ -55,7 +55,20 @@ export async function getAboutInfo(): Promise<any> {
 export async function getDetailInfo(): Promise<any> {
 }
 
-export async function login(): Promise<any> {
+export async function login(userinfo: UserInfo): Promise<any> {
+  try {
+    await Axios.post('/graphql', {
+      query: `
+        mutation LoginUser {
+          login(user: ${userinfo}) {
+            token
+          }
+        }
+      `,
+    });
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function logout(): Promise<any> {

@@ -37,7 +37,11 @@ module.exports = {
         '.mu-card-title',
         '.mu-card-sub-title',
         '.mu-card-text',
-        '.mu-button-wrapper'
+        '.mu-button-wrapper',
+        '.mu-button',
+        '.mu-raised-button',
+        '.mu-primary-color',
+        '.mu-inverse'
       ],
       // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值著作权归作者所有。
       minPixelValue: 1, 
