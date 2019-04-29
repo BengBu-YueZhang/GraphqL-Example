@@ -51,3 +51,18 @@ export async function getAboutInfo(): Promise<any> {
     throw error;
   }
 }
+
+export async function getDetailInfo(): Promise<any> {
+}
+
+export async function login(): Promise<any> {
+}
+
+export async function logout(): Promise<any> {
+}
+
+export async function addNote(): Promise<any> {
+}
+
+export async function updateNote(): Promise<any> {
+}
