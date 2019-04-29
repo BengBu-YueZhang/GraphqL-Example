@@ -33,11 +33,5 @@ export default new Router({
       name: 'detail',
       component: () => import(/* webpackChunkName: "about" */ './views/Detail.vue'),
     },
-    // 笔记页
-    {
-      path: '/note',
-      name: 'note',
-      component: () => import(/* webpackChunkName: "about" */ './views/Note.vue'),
-    },
   ],
 });
