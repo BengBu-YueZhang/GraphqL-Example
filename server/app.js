@@ -38,7 +38,7 @@ const initDatasource = () => {
 }
 
 app.use(cors({
-  origin: '127.0.0.1:5000',
+  origin: '*',
   credentials: true,
   methods: ['PUT', 'POST', 'GET', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Content-Length', 'Authorization', 'Accept', 'X-Requested-With', 'x-access-token']
