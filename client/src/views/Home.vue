@@ -34,8 +34,22 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { UserInfo } from '../interface/user.interface';
+import { getHomeInfo } from '../http';
 
-@Component({
-})
-export default class Home extends Vue {}
+@Component
+export default class Home extends Vue {
+  private userInfoList: [UserInfo] = [];
+
+  private created(): void {
+    this.getUsers();
+  }
+
+  private async getUsers(): Promise<any> {
+    try {
+      await getHomeInfo();
+    } catch (error) {
+    }
+  }
+}
 </script>

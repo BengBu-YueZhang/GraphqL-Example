@@ -8,8 +8,6 @@ const response = require('./middleware/response')
 const config = require('./config')
 const typeDefs = require('./schemas')
 const resolvers = require('./resolvers')
-const UserDatasource = require('./datasources/user.datasource')
-const NoteDatasource = require('./datasources/note.datasource')
 const app = new Koa()
 const mode = process.env.mode
 
@@ -50,6 +48,9 @@ initRouters()
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ ctx }) => ({
+    auth: ctx.req.headers['x-access-token']
+  }),
   dataSources: () => initDatasource(),
   // 内省
   introspection: mode === 'develop' ? true : false,

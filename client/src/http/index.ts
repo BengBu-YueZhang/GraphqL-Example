@@ -55,17 +55,22 @@ export async function getAboutInfo(): Promise<any> {
 export async function getDetailInfo(): Promise<any> {
 }
 
-export async function login(userinfo: UserInfo): Promise<any> {
+export async function login(userinfo: UserInfo): Promise<string> {
   try {
-    await Axios.post('/graphql', {
+    const { name, password } = userinfo;
+    const { data: { login: { token } } } = await Axios.post('/graphql', {
       query: `
         mutation LoginUser {
-          login(user: ${userinfo}) {
+          login(user: {
+            name: "${name}",
+            password: "${password}"
+          }) {
             token
           }
         }
       `,
     });
+    return token;
   } catch (error) {
     throw error;
   }
