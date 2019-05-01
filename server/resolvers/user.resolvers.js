@@ -1,32 +1,32 @@
 module.exports = {
   Query: {
-    users (_, { pagestart, pagesize }, { dataSources }) {
+    users (_, { pagestart, pagesize }, { dataSources, auth }) {
       return dataSources.UserDatasource.getUsers({
         pagestart,
         pagesize
-      })
+      }, auth)
     },
-    user (_, { id }, { dataSources }) {
+    user (_, { id }, { dataSources, auth }) {
       return dataSources.UserDatasource.getUserById({
         id
-      })
+      }, auth)
     },
-    me () {
-      return dataSources.UserDatasource.getCurrentUser()
+    me (_, __, { dataSources, auth }) {
+      return dataSources.UserDatasource.getCurrentUser(auth)
     }
   },
   Mutation: {
-    addUser (_, { user }, { dataSources }) {
-      return dataSources.UserDatasource.addUser(user)
+    addUser (_, { user }, { dataSources, auth }) {
+      return dataSources.UserDatasource.addUser(user, auth)
     },
-    updateUser (_, { user }, { dataSources }) {
-      return dataSources.UserDatasource.updateUser(user)
+    updateUser (_, { user }, { dataSources, auth }) {
+      return dataSources.UserDatasource.updateUser(user, auth)
     },
-    login (_, { user }, { dataSources }) {
-      return dataSources.UserDatasource.login(user)
+    login (_, { user }, { dataSources, auth }) {
+      return dataSources.UserDatasource.login(user, auth)
     },
-    logout () {
-      return dataSources.UserDatasource.logout()
+    logout (_, __, { dataSources, auth }) {
+      return dataSources.UserDatasource.logout(auth)
     }
   }
 }

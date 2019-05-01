@@ -6,8 +6,13 @@ class UserAPI extends RESTDataSource {
     this.baseURL = `http://127.0.0.1:${config.URL.port}/user/`
   }
 
-  async getUsers (params) {
-    let { data, msg, code } = await this.get('users', params)
+  // 这里鉴权做的比较蠢，大家不要模仿
+  async getUsers (params, auth) {
+    let { data, msg, code } = await this.get('users', params, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     data = Array.isArray(data) ? data.map(user => this.userReducer(user)) : []
     return {
       data,
@@ -16,8 +21,12 @@ class UserAPI extends RESTDataSource {
     }
   }
 
-  async getUserById (params) {
-    let { data, msg, code } = await this.get('/', params)
+  async getUserById (params, auth) {
+    let { data, msg, code } = await this.get('/', params, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     data = this.userReducer(data)
     return {
       data,
@@ -26,8 +35,12 @@ class UserAPI extends RESTDataSource {
     }
   }
 
-  async getCurrentUser () {
-    let { data, msg, code } = await this.get('/current')
+  async getCurrentUser (auth) {
+    let { data, msg, code } = await this.get('/current', null, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     data = this.userReducer(data)
     return {
       data,
@@ -46,24 +59,36 @@ class UserAPI extends RESTDataSource {
         }
       }
     */
-  async addUser (params) {
-    let { code, msg } = await this.post('/', { ...params })
+  async addUser (params, auth) {
+    let { code, msg } = await this.post('/', { ...params }, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     return {
       code,
       msg
     }
   }
 
-  async updateUser (params) {
-    let { code, msg } = await this.put('/', { ...params})
+  async updateUser (params, auth) {
+    let { code, msg } = await this.put('/', { ...params }, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     return {
       code,
       msg
     }
   }
 
-  async login (params) {
-    let { token, code, msg } = await this.post('/login', { ...params })
+  async login (params, auth) {
+    let { token, code, msg } = await this.post('/login', { ...params }, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     return {
       token,
       code,
@@ -71,8 +96,12 @@ class UserAPI extends RESTDataSource {
     }
   }
 
-  async logout (params) {
-    let data = await this.post('/logout', params)
+  async logout (params, auth) {
+    let data = await this.post('/logout', params, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
   }
 
   userReducer (user) {

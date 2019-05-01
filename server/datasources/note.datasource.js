@@ -7,8 +7,12 @@ class NoteAPI extends RESTDataSource {
     this.baseURL = `http://127.0.0.1:${config.URL.port}/note/`
   }
 
-  async getNotes (params) {
-    let { data, msg, code } = await this.get('notes', params)
+  async getNotes (params, auth) {
+    let { data, msg, code } = await this.get('notes', params, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     data = Array.isArray(data) ? data.map(user => this.noteReducer(user)) : []
     return {
       data,
@@ -17,8 +21,12 @@ class NoteAPI extends RESTDataSource {
     }
   }
 
-  async getNoteById (params) {
-    let { data, msg, code } = await this.get('/', params)
+  async getNoteById (params, auth) {
+    let { data, msg, code } = await this.get('/', params, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     data = this.noteReducer(data)
     return {
       data,
@@ -27,8 +35,12 @@ class NoteAPI extends RESTDataSource {
     }
   }
 
-  async getCurrentUserNote () {
-    let { data, msg, code } = await this.get('/current')
+  async getCurrentUserNote (auth) {
+    let { data, msg, code } = await this.get('/current', null, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     data = this.noteReducer(data)
     return {
       data,
@@ -37,24 +49,36 @@ class NoteAPI extends RESTDataSource {
     }
   }
 
-  async addNote (params) {
-    let { code, msg } = await this.post('/', { ...params })
+  async addNote (params, auth) {
+    let { code, msg } = await this.post('/', { ...params }, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     return {
       code,
       msg
     }
   }
 
-  async updateNote (params) {
-    let { code, msg } = await this.put('/', { ...params })
+  async updateNote (params, auth) {
+    let { code, msg } = await this.put('/', { ...params }, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     return {
       code,
       msg
     }
   }
 
-  async deleteNote (params) {
-    let { code, msg } = await this.delete('/', { ...params })
+  async deleteNote (params, auth) {
+    let { code, msg } = await this.delete('/', { ...params }, {
+      headers: {
+        'x-access-token': auth
+      }
+    })
     return {
       code,
       msg

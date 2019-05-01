@@ -26,6 +26,5 @@ module.exports = function () {
     } else {
       ctx.throw(403, '缺少token')
     }
-    await next()
   }
 }
