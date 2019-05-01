@@ -8,7 +8,7 @@ const config = {
   },
   production: {
     port: 10010,
-    mongo: `mongodb://${`gql`}:${12345678}@${10010}:27017/gqldeom`,
+    mongo: `mongodb://${`gql`}:${12345678}@127.0.0.1:27017/gqldeom`,
     graphql: '/graphql'
   }
 }
