@@ -2,7 +2,7 @@ const { gql } = require('apollo-server-koa')
 
 const typeDefs = gql`
   type Query {
-    notes(pagestart: Int = 1, pagesize: Int = 10): NotesResponse!
+    notes(uId: ID!): NotesResponse!
     note(id: ID!): NoteResponse
     meNote: NoteResponse
   }

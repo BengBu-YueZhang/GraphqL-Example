@@ -16,9 +16,21 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { getAboutInfo } from '../http';
 
-@Component({
-})
+@Component
 export default class About extends Vue {
+  
+  private created(): void {
+    const { id } = this.$route.query
+    this.getAbout(id);
+  }
+
+  private async getAbout(id: string): Promise<any> {
+    try {
+      await getAboutInfo(id);
+    } catch (error) {
+    }
+  }
 }
 </script>

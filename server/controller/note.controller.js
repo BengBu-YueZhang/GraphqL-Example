@@ -1,16 +1,13 @@
 
 const NoteModel = require('../models/note.model')
 const { is, isEmpty } = require('ramda')
-const { getSkip } = require('../util')
 
 module.exports = {
   async getNotes (ctx, next) {
     try {
-      let { pagestart, pagesize } = ctx.request.query
-      let { skip, limit } = getSkip(pagestart, pagesize, ctx)
-      const data = await NoteModel.find(null, null, {
-        skip,
-        limit
+      let { uId } = ctx.request.query
+      const data = await NoteModel.find({
+        uId
       })
       ctx.result = {
         data,

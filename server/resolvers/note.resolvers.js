@@ -1,9 +1,8 @@
 module.exports = {
   Query: {
-    notes (_, { pagestart, pagesize }, { dataSources, auth }) {
+    notes (_, { uId }, { dataSources, auth }) {
       return dataSources.NoteDatasource.getNotes({
-        pagestart,
-        pagesize
+        uId
       }, auth)
     },
     note (_, { id }, { dataSources, auth }) {
