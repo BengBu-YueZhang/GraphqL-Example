@@ -5,7 +5,7 @@ const authentication = require('../middleware/authentication')
 
 router.get('/notes', authentication(), NoteController.getNotes)
 router.get('/', authentication(), NoteController.getNoteById)
-router.post('/', authentication(), sNoteController.addNote)
+router.post('/', authentication(), NoteController.addNote)
 router.put('/', authentication(), NoteController.updateNote)
 router.delete('/', authentication(), NoteController.deleteNote)
 
