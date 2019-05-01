@@ -2,10 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Login from './views/Login.vue';
+import { isHaveStorage } from './util/storage';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -34,3 +35,14 @@ export default new Router({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  const { path: toPath } = to;
+  if (!isHaveStorage('token') && toPath !== '/login') {
+    next('/login');
+  } else {
+    next();
+  }
+});
+
+export default router;

@@ -40,8 +40,14 @@ export async function getAboutInfo(id: string): Promise<any> {
         query getAboutInfo {
           user(id: "${id}") {
             data {
+              id
               name
               createDate
+            }
+          }
+          me {
+            data {
+              id
             }
           }
           notes(uId: "${id}") {
