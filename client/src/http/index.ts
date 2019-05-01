@@ -8,7 +8,7 @@ import { UserInfo } from '../interface/user.interface';
 /**
  * 获取首页的信息
  */
-export async function getHomeInfo(pagestart: number = 1, pagesize: number = 10): Promise<[UserInfo]> {
+export async function getHomeInfo(pagestart: number = 1, pagesize: number = 10): Promise<any> {
   try {
     const { data } = await Axios.post('/graphql', {
       query: `
@@ -56,9 +56,6 @@ export async function getAboutInfo(id: string): Promise<any> {
   }
 }
 
-export async function getDetailInfo(): Promise<any> {
-}
-
 export async function login(userinfo: UserInfo): Promise<string> {
   try {
     const { name, password } = userinfo;
@@ -78,13 +75,4 @@ export async function login(userinfo: UserInfo): Promise<string> {
   } catch (error) {
     throw error;
   }
-}
-
-export async function logout(): Promise<any> {
-}
-
-export async function addNote(): Promise<any> {
-}
-
-export async function updateNote(): Promise<any> {
 }

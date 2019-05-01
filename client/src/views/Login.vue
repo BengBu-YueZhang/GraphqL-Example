@@ -23,7 +23,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { UserInfo } from '../interface/user.interface';
 import { login } from '../http';
-import { isHaveStorage, setLocalStorage } from '../util/storage'
+import { isHaveStorage, setLocalStorage } from '../util/storage';
 
 @Component
 export default class Login extends Vue {
@@ -33,21 +33,18 @@ export default class Login extends Vue {
   };
 
   private created(): void {
-    this.init()
+    this.init();
   }
 
   private init(): void {
     if (isHaveStorage('token')) {
-      this.$router.push('/')
+      this.$router.push('/');
     }
   }
 
   private async handleLogin(): Promise<any> {
-    try {
-      const token = await login(this.userInfo);
-      setLocalStorage('token', token);
-    } catch (error) {
-    }
+    const token = await login(this.userInfo);
+    setLocalStorage('token', token);
   }
 }
 </script>

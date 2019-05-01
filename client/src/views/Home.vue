@@ -28,28 +28,26 @@ import avatar from '../util/avatar';
 
 @Component
 export default class Home extends Vue {
-  private userInfoList: [UserInfo] = [];
+  private userInfoList!: [UserInfo];
+
   private getAvatar: () => string = avatar;
-  
+
   private created(): void {
     this.getUsers();
   }
 
   private async getUsers(): Promise<any> {
-    try {
-      const { users: { data } } = await getHomeInfo();
-      this.userInfoList = data;
-    } catch (error) {
-    }
+    const { users: { data } } = await getHomeInfo();
+    this.userInfoList = data;
   }
 
   private handleDetail(id: string): void {
     this.$router.push({
       path: '/about',
       query: {
-        id
-      }
-    })
+        id,
+      },
+    });
   }
 }
 </script>

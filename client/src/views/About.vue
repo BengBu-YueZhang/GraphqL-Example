@@ -1,5 +1,21 @@
 <template>
   <div class="about">
+    <mu-sub-header>用户</mu-sub-header>
+    <mu-list-item class="home-list-item" button :ripple="false">
+      <mu-list-item-action>
+        <mu-avatar>
+          <img :src="getAvatar()">
+        </mu-avatar>
+      </mu-list-item-action>
+      <!-- <mu-list-item-content>
+        <mu-list-item-title>{{ item.name }}</mu-list-item-title>
+        <mu-list-item-sub-title>{{ item.createDate }}</mu-list-item-sub-title>
+      </mu-list-item-content> -->
+      <mu-list-item-action>
+        <mu-icon value="info" @click="handleDetail(item.id)"></mu-icon>
+      </mu-list-item-action>
+    </mu-list-item>
+    <mu-sub-header>贴子</mu-sub-header>
     <mu-list textline="three-line">
       <mu-list-item avatar :ripple="false" button>
         <mu-list-item-content>
@@ -17,20 +33,26 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { getAboutInfo } from '../http';
+import avatar from '../util/avatar';
+import { UserInfo } from '../interface/user.interface';
+import { NoteInfo } from '../interface/note.interface';
 
 @Component
 export default class About extends Vue {
-  
+
+  private userInfo!: UserInfo;
+
+  private getAvatar: () => string = avatar;
+
   private created(): void {
-    const { id } = this.$route.query
-    this.getAbout(id);
+    const { id } = this.$route.query;
+    if (typeof id === 'string') {
+      this.getAbout(id);
+    }
   }
 
   private async getAbout(id: string): Promise<any> {
-    try {
-      await getAboutInfo(id);
-    } catch (error) {
-    }
+    const { user: { data: userInfo }, notes: { data: notesList } } = await getAboutInfo(id);
   }
 }
 </script>
