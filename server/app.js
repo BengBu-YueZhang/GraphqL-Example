@@ -44,6 +44,14 @@ app.use(cors({
 app.use(bodyparser())
 app.use(response())
 
+app.use(async (ctx, next) => {
+  const start = new Date()
+  await next()
+  const ms = new Date() - start
+  console.log(`${ctx.method} ${ctx.url} - $ms`)
+})
+
+
 initRouters()
 
 const server = new ApolloServer({
