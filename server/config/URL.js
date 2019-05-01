@@ -8,7 +8,7 @@ const config = {
   },
   production: {
     port: 10010,
-    mongo: `mongodb://root:root@127.0.0.1:27017/gql`,
+    mongo: `mongodb://root:root@127.0.0.1:27017/gql?authMechanism=SCRAM-SHA-1`,
     graphql: '/graphql'
   }
 }
