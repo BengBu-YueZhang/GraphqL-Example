@@ -15,6 +15,7 @@ export async function getHomeInfo(pagestart: number = 1, pagesize: number = 10):
         query getHomeInfo {
           users(pagestart: ${pagestart}, pagesize: ${pagesize}) {
             data {
+              id
               name
               createDate
             }
