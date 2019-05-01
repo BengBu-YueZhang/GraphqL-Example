@@ -27,6 +27,7 @@
     </mu-list>
     <div class="p-10">
       <mu-button
+        v-if="meId === userInfo.id"
         full-width
         @click="handleAddNote"
         color="primary"
@@ -53,6 +54,8 @@ export default class About extends Vue {
 
   private notesList: [NoteInfo] | [] = [];
 
+  private meId: string = '';
+
   private getAvatar: () => string = avatar;
 
   private created(): void {
@@ -63,9 +66,10 @@ export default class About extends Vue {
   }
 
   private async getAbout(id: string): Promise<any> {
-    const { user: { data: userInfo }, notes: { data: notesList } } = await getAboutInfo(id);
+    const { user: { data: userInfo }, notes: { data: notesList }, me: { data: meInfo } } = await getAboutInfo(id);
     this.userInfo = userInfo;
     this.notesList = notesList;
+    this.meId = meInfo.id;
   }
 
   private handleAddNote(): void {
