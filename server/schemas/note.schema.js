@@ -34,9 +34,10 @@ const typeDefs = gql`
   }
 
   input NoteRequest {
-    id: ID!
+    id: ID
     title: String
     detail: String
+    uId: String
   }
 `
 

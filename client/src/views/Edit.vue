@@ -1,7 +1,7 @@
 <template>
   <div class="edit p-20">
     <mu-text-field
-      v-model="noteInfo.name"
+      v-model="noteInfo.title"
       label="标题"
       label-float
       full-width
@@ -49,6 +49,7 @@ export default class Edit extends Vue {
 
   private async handleSave(): Promise<any> {
     await createNote(this.noteInfo);
+    this.$router.back();
   }
 }
 </script>
