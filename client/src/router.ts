@@ -27,12 +27,6 @@ export default new Router({
       name: 'login',
       component: Login,
     },
-    // 笔记详情页
-    {
-      path: '/detail',
-      name: 'detail',
-      component: () => import(/* webpackChunkName: "about" */ './views/Detail.vue'),
-    },
     {
       path: '/edit',
       name: 'edit',
