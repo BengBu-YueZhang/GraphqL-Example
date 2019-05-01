@@ -5,7 +5,7 @@
       <mu-list-item class="home-list-item" v-for="item in userInfoList" button :ripple="false" :key="item.id ">
         <mu-list-item-action>
           <mu-avatar>
-            <img :src="avatar()">
+            <img :src="getAvatar()">
           </mu-avatar>
         </mu-list-item-action>
         <mu-list-item-content>
@@ -24,26 +24,15 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { UserInfo } from '../interface/user.interface';
 import { getHomeInfo } from '../http';
-
-function randomNumBoth(min: number, max: number): number {
-  const range = max - min;
-  const rand = Math.random();
-  const num = min + Math.round(rand * range);
-  return num;
-}
+import avatar from '../util/avatar';
 
 @Component
 export default class Home extends Vue {
   private userInfoList: [UserInfo] = [];
+  private getAvatar: () => string = avatar;
   
   private created(): void {
     this.getUsers();
-  }
-
-  private avatar(): string {
-    const w = randomNumBoth(30, 120)
-    const h = w
-    return `https://unsplash.it/${w}/${h}?random`
   }
 
   private async getUsers(): Promise<any> {
