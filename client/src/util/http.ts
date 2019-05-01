@@ -27,6 +27,14 @@ Axios.interceptors.request.use(
 Axios.interceptors.response.use(
   (res: any) => {
     const data: any = res.data;
+    if (data.errors) {
+      // 删除过期的token
+      for (let i = 0; i < data.errors.length; i++) {
+        if (data.errors[i].message.indexOf('403') > -1) {
+          removeLocalStorage('token');
+        }
+      }
+    }
     return data;
   },
 );
