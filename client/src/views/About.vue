@@ -71,9 +71,6 @@ export default class About extends Vue {
   private handleAddNote(): void {
     this.$router.push({
       path: '/edit',
-      query: {
-        id: this.userInfo.id,
-      },
     });
   }
 }

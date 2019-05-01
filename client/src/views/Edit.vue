@@ -31,17 +31,9 @@ import { createNote } from '../http';
 @Component
 export default class Edit extends Vue {
   private noteInfo: NoteInfo = {
-    uId: '',
     title: '',
     detail: '',
   };
-
-  private created(): void {
-    const { id } = this.$route.query;
-    if (typeof id === 'string') {
-      this.noteInfo.uId = id;
-    }
-  }
 
   private handleCancel(): void {
     this.$router.back();
