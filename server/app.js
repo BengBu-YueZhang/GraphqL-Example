@@ -11,13 +11,13 @@ const resolvers = require('./resolvers')
 const app = new Koa()
 const mode = process.env.mode
 
-const initRouters = () => {
-  const paths = glob.sync(path.resolve('./routes/*.router.js'))
-  paths.forEach(path => {
-    const route = require(path)
-    app.use(route.routes(), route.allowedMethods())
-  })
-}
+// const initRouters = () => {
+//   const paths = glob.sync(path.resolve('./routes/*.router.js'))
+//   paths.forEach(path => {
+//     const route = require(path)
+//     app.use(route.routes(), route.allowedMethods())
+//   })
+// }
 
 const initDatasource = () => {
   let datasourceMap = {}
@@ -51,8 +51,7 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - $ms`)
 })
 
-
-initRouters()
+// initRouters()
 
 const server = new ApolloServer({
   typeDefs,
