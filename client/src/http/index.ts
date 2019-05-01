@@ -1,5 +1,6 @@
 import Axios from '../util/http';
 import { UserInfo } from '../interface/user.interface';
+import { NoteInfo } from '../interface/note.interface';
 
 /**
  * 由于使用了GraphQL, 按照每一个页面，创建请求的的函数
@@ -75,6 +76,28 @@ export async function login(userinfo: UserInfo): Promise<string> {
       `,
     });
     return token;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function createNote(note: NoteInfo): Promise<any> {
+  try {
+    const { title, detail, uId } = note;
+    const { data } = await Axios.post('/graphql', {
+      query: `
+        mutation AddNote {
+          addNote(note: {
+            title: "${title}",
+            detail: "${detail}",
+            uId: "${uId}"
+          }) {
+            code
+          }
+        }
+      `,
+    });
+    return data;
   } catch (error) {
     throw error;
   }
