@@ -41,7 +41,8 @@ module.exports = {
         '.mu-button',
         '.mu-raised-button',
         '.mu-primary-color',
-        '.mu-inverse'
+        '.mu-inverse',
+        '.mu-sub-header'
       ],
       // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值著作权归作者所有。
       minPixelValue: 1, 
