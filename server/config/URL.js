@@ -8,9 +8,20 @@ const config = {
   },
   production: {
     port: 10010,
-    mongo: `mongodb://${`gql`}:${12345678}@127.0.0.1:27017/gqldeom?authMechanism=SCRAM-SHA-1`,
+    mongo: `mongodb://root:root@127.0.0.1:27017/gql`,
     graphql: '/graphql'
   }
 }
 
 module.exports = config[mode]
+
+
+// db.createUser(
+//   {
+//     user: "root",
+//     pwd: "root",
+//     roles: [
+//        { role: "dbAdmin", db: "gql" }
+//     ]
+//   }
+// )
