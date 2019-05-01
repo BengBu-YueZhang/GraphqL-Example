@@ -45,6 +45,7 @@ export default class Login extends Vue {
   private async handleLogin(): Promise<any> {
     const token = await login(this.userInfo);
     setLocalStorage('token', token);
+    this.init();
   }
 }
 </script>

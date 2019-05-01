@@ -24,8 +24,14 @@
           </mu-list-item-sub-title>
         </mu-list-item-content>
       </mu-list-item>
-      <mu-divider></mu-divider>
     </mu-list>
+    <div class="p-10">
+      <mu-button
+        full-width
+        @click="handleAddNote"
+        color="primary"
+      >创建一条</mu-button>
+    </div>
   </div>
 </template>
 
@@ -40,9 +46,10 @@ import { NoteInfo } from '../interface/note.interface';
 export default class About extends Vue {
 
   private userInfo: UserInfo = {
+    id: '',
     name: '',
-    createDate: ''
-  }
+    createDate: '',
+  };
 
   private notesList: [NoteInfo] | [] = [];
 
@@ -59,6 +66,15 @@ export default class About extends Vue {
     const { user: { data: userInfo }, notes: { data: notesList } } = await getAboutInfo(id);
     this.userInfo = userInfo;
     this.notesList = notesList;
+  }
+
+  private handleAddNote(): void {
+    this.$router.push({
+      path: '/edit',
+      query: {
+        id: this.userInfo.id,
+      },
+    });
   }
 }
 </script>

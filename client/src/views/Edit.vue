@@ -1,5 +1,5 @@
 <template>
-  <div class="edit">
+  <div class="edit p-20">
     <mu-text-field
       v-model="noteInfo.name"
       label="标题"
@@ -12,8 +12,14 @@
       full-width
       multi-line :rows="3" :rows-max="6"
     ></mu-text-field>
-    <mu-button color="success">取消</mu-button>
-    <mu-button color="primary">保存</mu-button>
+    <div class="flex-center-center">
+      <div class="p-10">
+        <mu-button @click="handleCancel" color="success">取消</mu-button>
+      </div>
+      <div class="p-10">
+        <mu-button @click="handleSave" color="primary">保存</mu-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -27,5 +33,12 @@ export default class Edit extends Vue {
     title: '',
     detail: '',
   };
+
+  private handleCancel(): void {
+    this.$router.back();
+  }
+
+  private async handleSave(): Promise<any> {
+  }
 }
 </script>

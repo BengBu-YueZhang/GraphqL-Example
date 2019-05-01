@@ -1,7 +1,7 @@
 
 
 export interface NoteInfo {
-  id: string;
+  id?: string;
   title: string;
   detail: string;
   uId?: string;
