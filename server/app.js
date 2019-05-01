@@ -8,7 +8,6 @@ const response = require('./middleware/response')
 const config = require('./config')
 const typeDefs = require('./schemas')
 const resolvers = require('./resolvers')
-const authentication = require('./middleware/authentication')
 const app = new Koa()
 const mode = process.env.mode
 
@@ -44,7 +43,6 @@ app.use(cors({
 }))
 app.use(bodyparser())
 app.use(response())
-app.use(authentication())
 
 initRouters()
 
