@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <mu-sub-header>用户</mu-sub-header>
-    <mu-list textline="three-line">
+    <mu-list>
       <mu-list-item button :ripple="false">
         <mu-list-item-action>
           <mu-avatar>
@@ -15,7 +15,7 @@
       </mu-list-item>
     </mu-list>
     <mu-sub-header>贴子</mu-sub-header>
-    <mu-list textline="three-line">
+    <mu-list>
       <mu-list-item v-if="notesList" v-for="item in notesList" :key="item.id" avatar :ripple="false" button>
         <mu-list-item-content>
           <mu-list-item-title>{{ item.title }}</mu-list-item-title>
