@@ -4,6 +4,8 @@ import { isHaveStorage, getLocalStorage, removeLocalStorage } from '@/util/stora
 const NODE_ENV: string = process.env.NODE_ENV;
 const baseURL = NODE_ENV === 'development' ? 'http://127.0.0.1:5000/' : 'http://apigql.bengbuzhangyue.xyz';
 
+console.log('NODE_ENV--->', NODE_ENV);
+
 const Axios = axios.create({
   baseURL,
   responseType: 'json',
