@@ -58,7 +58,7 @@ module.exports = {
         ctx.throw(400, `detail必须是字符串`)
       }
       const { id: uId } = ctx.decoded
-      note = new NoteModel({ uId: mongoose.Types.ObjectId(uId), title, detail })
+      note = new NoteModel({ uId, title, detail })
       await note.save()
       ctx.result = {
         msg: 'success',
