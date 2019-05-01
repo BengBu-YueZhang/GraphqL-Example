@@ -2,7 +2,14 @@
   <div class="home">
     <mu-list>
       <mu-sub-header>用户</mu-sub-header>
-      <mu-list-item class="home-list-item" v-for="item in userInfoList" button :ripple="false" :key="item.id ">
+      <mu-list-item
+        v-if="userInfoList"
+        class="home-list-item"
+        v-for="item in userInfoList"
+        button
+        :ripple="false"
+        :key="item.id"
+      >
         <mu-list-item-action>
           <mu-avatar>
             <img :src="getAvatar()">
@@ -28,7 +35,7 @@ import avatar from '../util/avatar';
 
 @Component
 export default class Home extends Vue {
-  private userInfoList!: [UserInfo];
+  private userInfoList: [UserInfo] | [] = [];
 
   private getAvatar: () => string = avatar;
 

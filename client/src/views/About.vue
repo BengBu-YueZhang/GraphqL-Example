@@ -1,27 +1,26 @@
 <template>
   <div class="about">
     <mu-sub-header>用户</mu-sub-header>
-    <mu-list-item class="home-list-item" button :ripple="false">
-      <mu-list-item-action>
-        <mu-avatar>
-          <img :src="getAvatar()">
-        </mu-avatar>
-      </mu-list-item-action>
-      <!-- <mu-list-item-content>
-        <mu-list-item-title>{{ item.name }}</mu-list-item-title>
-        <mu-list-item-sub-title>{{ item.createDate }}</mu-list-item-sub-title>
-      </mu-list-item-content> -->
-      <mu-list-item-action>
-        <mu-icon value="info" @click="handleDetail(item.id)"></mu-icon>
-      </mu-list-item-action>
-    </mu-list-item>
+    <mu-list textline="three-line">
+      <mu-list-item button :ripple="false">
+        <mu-list-item-action>
+          <mu-avatar>
+            <img :src="getAvatar()">
+          </mu-avatar>
+        </mu-list-item-action>
+        <mu-list-item-content>
+          <mu-list-item-title>{{ userInfo.name }}</mu-list-item-title>
+          <mu-list-item-sub-title>{{ userInfo.createDate }}</mu-list-item-sub-title>
+        </mu-list-item-content>
+      </mu-list-item>
+    </mu-list>
     <mu-sub-header>贴子</mu-sub-header>
     <mu-list textline="three-line">
-      <mu-list-item avatar :ripple="false" button>
+      <mu-list-item v-if="notesList" v-for="item in notesList" :key="item.id" avatar :ripple="false" button>
         <mu-list-item-content>
-          <mu-list-item-title>这个周末一起吃饭么?</mu-list-item-title>
+          <mu-list-item-title>{{ item.title }}</mu-list-item-title>
           <mu-list-item-sub-title>
-            周末要来你这里出差，要不要一起吃个饭呀，实在编不下去了,哈哈哈哈哈哈
+            {{ item.detail }}
           </mu-list-item-sub-title>
         </mu-list-item-content>
       </mu-list-item>
@@ -40,7 +39,12 @@ import { NoteInfo } from '../interface/note.interface';
 @Component
 export default class About extends Vue {
 
-  private userInfo!: UserInfo;
+  private userInfo: UserInfo = {
+    name: '',
+    createDate: ''
+  }
+
+  private notesList: [NoteInfo] | [] = [];
 
   private getAvatar: () => string = avatar;
 
@@ -53,6 +57,8 @@ export default class About extends Vue {
 
   private async getAbout(id: string): Promise<any> {
     const { user: { data: userInfo }, notes: { data: notesList } } = await getAboutInfo(id);
+    this.userInfo = userInfo;
+    this.notesList = notesList;
   }
 }
 </script>
