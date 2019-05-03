@@ -16,12 +16,12 @@ const config = {
 module.exports = config[mode]
 
 
-db.createUser(
-  {
-    user: "gql",
-    pwd: "gql",
-    roles: [
-       { role: "readWrite", db: "gql" }
-    ]
-  }
-)
+// db.createUser(
+//   {
+//     user: "gql",
+//     pwd: "gql",
+//     roles: [
+//        { role: "readWrite", db: "gql" }
+//     ]
+//   }
+// )
