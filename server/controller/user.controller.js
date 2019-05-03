@@ -12,6 +12,7 @@ const delAsync = promisify(redisClient.del).bind(redisClient)
 module.exports = {
   async login (ctx, next) {
     try {
+      console.log('login con1')
       const { name, password } = ctx.request.body
       if (isEmpty(name)) {
         ctx.throw(400, `name不能为空`)
@@ -27,6 +28,7 @@ module.exports = {
       if (!equal) {
         ctx.throw(400, `密码错误`)
       }
+      console.log('login con2')
       // 生成token
       const token = jwt.sign(
         {
@@ -37,8 +39,10 @@ module.exports = {
           expiresIn: config.jwt.timeout
         }
       )
+      console.log('login con3')
       const redisKey = user._id.toString()
       await setAsync(redisKey, token, 'EX', config.jwt.timeout)
+      console.log('login con4')
       ctx.result = {
         code: 200,
         msg: 'success',
