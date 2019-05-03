@@ -108,3 +108,22 @@ export async function createNote(note: NoteInfo): Promise<any> {
     throw error;
   }
 }
+
+export async function createUser(): Promise<any> {
+  try {
+    await Axios.post('/graphql', {
+      query: `
+        mutation addUser {
+          addUser(user: {
+            name: "root",
+            password: "root"
+          }) {
+            code
+          }
+        }
+      `,
+    });
+  } catch (error) {
+    throw error;
+  }
+}
