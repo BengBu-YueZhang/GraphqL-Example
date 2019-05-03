@@ -33,7 +33,7 @@ export default class Login extends Vue {
   };
 
   private created(): void {
-    createUser();
+    // createUser();
     this.init();
   }
 
