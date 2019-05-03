@@ -8,7 +8,7 @@ const config = {
   },
   production: {
     port: 10010,
-    mongo: `mongodb://root:root@127.0.0.1:27017/gql?authMechanism=SCRAM-SHA-1`,
+    mongo: `mongodb://gql:12345678@127.0.0.1:27017/gql?authMechanism=SCRAM-SHA-1`,
     graphql: '/graphql'
   }
 }
@@ -18,10 +18,11 @@ module.exports = config[mode]
 
 // db.createUser(
 //   {
-//     user: "root",
-//     pwd: "root",
+//     user: "gql",
+//     pwd: "12345678",
 //     roles: [
-//        { role: "dbAdmin", db: "gql" }
+//        { role: "dbAdmin", db: "gql" },
+//        { role: "readWrite", db: "gql" }
 //     ]
 //   }
 // )
