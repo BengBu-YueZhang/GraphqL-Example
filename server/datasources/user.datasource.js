@@ -84,6 +84,7 @@ class UserAPI extends RESTDataSource {
   }
 
   async login (params, auth) {
+    console.log('login datasource')
     let { token, code, msg } = await this.post('/login', { ...params }, {
       headers: {
         'x-access-token': auth

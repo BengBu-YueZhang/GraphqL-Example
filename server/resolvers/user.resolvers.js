@@ -23,6 +23,7 @@ module.exports = {
       return dataSources.UserDatasource.updateUser(user, auth)
     },
     login (_, { user }, { dataSources, auth }) {
+      console.log('login resolve')
       return dataSources.UserDatasource.login(user, auth)
     },
     logout (_, __, { dataSources, auth }) {
