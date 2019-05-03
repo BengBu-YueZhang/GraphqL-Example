@@ -17,6 +17,7 @@ module.exports = {
       if (isEmpty(name)) {
         ctx.throw(400, `name不能为空`)
       }
+      console.log('login con1.1')
       if (isEmpty(password)) {
         ctx.throw(400, `password不能为空`)
       }
@@ -24,6 +25,7 @@ module.exports = {
       if (!user) {
         ctx.throw(400, `用户不存在`)
       }
+      console.log('login con1.2')
       const equal = await bcrypt.compare(user.password, password)
       if (!equal) {
         ctx.throw(400, `密码错误`)
